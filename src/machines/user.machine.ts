@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { assign, createMachine } from "xstate";
+import { assign, createMachine, InterpreterFrom } from "xstate";
 
 type UserMachineEvents = {
   type: "LOGOUT"
@@ -37,12 +37,14 @@ export const userMachine = createMachine({
   context: {
     user: null,
   },
+  predictableActionArguments: true,
   schema: {
     context: {} as UserMachineContext,
     events: {} as UserMachineEvents,
     services: {} as UserMachienServices
   },
   id: "user",
+  initial: "loading",
   states: {
     loading: {
       invoke: {
@@ -66,7 +68,8 @@ export const userMachine = createMachine({
       invoke: {
         src: "removeUser",
         onDone: {
-          target: "noUser"
+          target: "noUser",
+          actions: ["removeUser"]
         }
       }
     },
@@ -89,7 +92,10 @@ export const userMachine = createMachine({
   actions: {
     assignUser: assign({
       user: (_, event) => event.data
-    })
+    }),
+    removeUser: assign({
+      user: null
+    }),
   },
   services: {
     removeUser: async () => {
@@ -101,6 +107,8 @@ export const userMachine = createMachine({
     },
     getUser: async () => {
       const user = await AsyncStorage.getItem("user")
+      console.log('user', user);
+      
       if (!user) {
         throw new Error("No user")
       }
