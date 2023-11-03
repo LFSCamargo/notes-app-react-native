@@ -1,4 +1,7 @@
 export type RootStackParamList = {
-  Welcome: undefined,
-  Todos: undefined
+  Welcome: undefined;
+  Notes: undefined;
+  Note: {
+    id: string;
+  };
 };

@@ -1,22 +1,22 @@
-import { useSelector } from "@xstate/react";
-import { useGlobalMachines } from "./globalMachines.hook";
+import { useSelector } from '@xstate/react';
+import { useGlobalMachines } from './globalMachines.hook';
 
 export function useUser() {
   const { user } = useGlobalMachines();
-  
-  const isLoading = useSelector(user, state => state.matches("loading"));
-  const userData = useSelector(user, state => state.context.user);
-  
+
+  const isLoading = useSelector(user, (state) => state.matches('loading'));
+  const userData = useSelector(user, (state) => state.context.user);
+
   function logout() {
-    user.send("LOGOUT");
+    user.send('LOGOUT');
   }
 
   function onboard(name: string) {
     user.send({
-      type: "ONBOARD",
+      type: 'ONBOARD',
       data: {
-        name
-      }
+        name,
+      },
     });
   }
 
@@ -25,7 +25,7 @@ export function useUser() {
     isLoading,
     handlers: {
       logout,
-      onboard
+      onboard,
     },
   };
 }
