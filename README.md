@@ -1,6 +1,6 @@
 # Offline Note-Taking App
 
-A simple week made on a holiday in a couple of hours using NativeWind, React Native, and XState, the app consists of persisting data into the Phone Storage and inside XState Machines.
+A simple app made on a holiday in a couple of hours using NativeWind, React Native, and XState, the app consists of persisting data into the Phone Storage and inside XState Machines.
 
 # ScreenShots
 
